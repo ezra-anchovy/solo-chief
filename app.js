@@ -59,7 +59,7 @@ class StrategicTriageEngine {
      * Main entry point for task triage
      * Returns classification and ROI score for each task
      */
-    async triageTasks(tasks, userContext) {
+    triageTasks(tasks, userContext) {
         const results = [];
 
         for (const task of tasks) {
