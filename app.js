@@ -951,6 +951,8 @@ class DashboardController {
                         Object.assign(task, t);
                         return task;
                     });
+                    // Re-run triage on loaded tasks
+                    this.triageEngine.triageTasks(this.tasks, this.userContext);
                     this.renderTasks();
                     this.updateOneThing();
                     this.updateStats();
