@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Chief — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #252836;
+            --border: #2e3140;
+            --text: #e4e4e7;
+            --text-muted: #71717a;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59,130,246,0.15);
+            --t1: #ef4444; --t1-bg: rgba(239,68,68,0.1);
+            --t2: #22c55e; --t2-bg: rgba(34,197,94,0.1);
+            --t3: #f59e0b; --t3-bg: rgba(245,158,11,0.1);
+            --t4: #6b7280; --t4-bg: rgba(107,114,128,0.1);
+            --t5: #8b5cf6; --t5-bg: rgba(139,92,246,0.1);
+            --success: #22c55e;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .header-left h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        #statusBadge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1.5px solid var(--success);
+            color: var(--success);
+            background: rgba(34,197,94,0.08);
+        }
+        #statusBadge .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        /* ========== LAYOUT ========== */
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 0;
+            min-height: calc(100vh - 57px);
+        }
+        @media (max-width: 1024px) {
+            .layout { grid-template-columns: 1fr; }
+            .sidebar { border-left: none; border-top: 1px solid var(--border); }
+        }
+
+        /* ========== MAIN PANEL ========== */
+        .main { padding: 1.5rem 2rem; overflow-y: auto; }
+
+        /* ========== ONE THING ========== */
+        .one-thing {
+            background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(139,92,246,0.08) 100%);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .one-thing-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        #oneThingTitle {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.375rem;
+        }
+        #oneThingWhy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        #startFocusBtn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.625rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        #startFocusBtn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+        #startFocusBtn:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+        /* ========== ADD TASK ========== */
+        .add-task-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .add-task-bar input, .add-task-bar select {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+        }
+        .add-task-bar input:focus, .add-task-bar select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+        #taskTitle { flex: 1; min-width: 200px; }
+        #taskTime { width: 80px; }
+        #taskDeadline { width: 175px; }
+        .add-task-bar button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .add-task-bar button:hover { filter: brightness(1.15); }
+
+        /* ========== TABS ========== */
+        .tabs {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0;
+        }
+        .tab {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .tab:hover { color: var(--text); }
+        .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        .task-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .task-list-header h2 { font-size: 0.95rem; font-weight: 700; }
+        #taskCount { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ========== TASK ITEMS ========== */
+        #taskList { display: flex; flex-direction: column; gap: 0.5rem; }
+        .task-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            transition: all 0.2s;
+        }
+        .task-item:hover { border-color: rgba(255,255,255,0.1); }
+        .task-item.t1 { border-left: 3px solid var(--t1); }
+        .task-item.t2 { border-left: 3px solid var(--t2); }
+        .task-item.t3 { border-left: 3px solid var(--t3); }
+        .task-item.t4 { border-left: 3px solid var(--t4); }
+        .task-item.t5 { border-left: 3px solid var(--t5); }
+        .task-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .task-title { font-weight: 600; font-size: 0.9rem; flex: 1; }
+        .task-tier {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .tier-t1 { background: var(--t1-bg); color: var(--t1); }
+        .tier-t2 { background: var(--t2-bg); color: var(--t2); }
+        .tier-t3 { background: var(--t3-bg); color: var(--t3); }
+        .tier-t4 { background: var(--t4-bg); color: var(--t4); }
+        .tier-t5 { background: var(--t5-bg); color: var(--t5); }
+        .task-meta {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+        .task-roi {
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .task-actions {
+            display: flex;
+            gap: 0.375rem;
+            margin-top: 0.625rem;
+        }
+        .task-action-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .task-action-btn:hover { background: var(--border); color: var(--text); }
+        .task-action-btn.complete:hover { background: rgba(34,197,94,0.15); color: var(--success); border-color: var(--success); }
+        .task-action-btn.delete:hover { background: rgba(239,68,68,0.15); color: var(--t1); border-color: var(--t1); }
+        .task-action-btn.focus:hover { background: var(--accent-glow); color: var(--accent); border-color: var(--accent); }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+        .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .sidebar h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--surface-2);
+            border-radius: 10px;
+            padding: 0.875rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.125rem;
+        }
+
+        /* Triage Summary */
+        .triage-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+            margin-bottom: 1.5rem;
+        }
+        .triage-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            background: var(--surface-2);
+            font-size: 0.8rem;
+        }
+        .triage-row .label { font-weight: 600; }
+        .triage-row .count {
+            font-weight: 800;
+            min-width: 24px;
+            text-align: center;
+        }
+        .triage-row.t1 .label { color: var(--t1); }
+        .triage-row.t2 .label { color: var(--t2); }
+        .triage-row.t3 .label { color: var(--t3); }
+        .triage-row.t4 .label { color: var(--t4); }
+        .triage-row.t5 .label { color: var(--t5); }
+
+        /* Energy */
+        .energy-section { margin-bottom: 1.5rem; }
+        .energy-bar {
+            display: flex;
+            gap: 4px;
+            margin-top: 0.5rem;
+        }
+        .energy-block {
+            flex: 1;
+            height: 8px;
+            background: var(--surface-2);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .energy-block.active {
+            background: var(--accent);
+        }
+        .energy-block:hover {
+            background: rgba(59,130,246,0.4);
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        /* ========== FOCUS OVERLAY ========== */
+        #focusOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        #focusOverlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .focus-content {
+            text-align: center;
+            max-width: 480px;
+            padding: 2rem;
+        }
+        .focus-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--t1);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        #focusTaskTitle {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        #focusTaskWhy {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        #focusTimer {
+            font-size: 4rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .focus-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--surface-2);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        #focusProgressFill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1s linear;
+        }
+        .focus-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+        .focus-actions button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .focus-btn-complete {
+            background: var(--success);
+            color: #000;
+        }
+        .focus-btn-complete:hover { filter: brightness(1.15); }
+        .focus-btn-exit {
+            background: var(--surface-2);
+            color: var(--text-muted);
+            border: 1px solid var(--border) !important;
+        }
+        .focus-btn-exit:hover { color: var(--text); background: var(--border); }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <span style="font-size:1.5rem;">💼</span>
+            <h1>Solo Chief</h1>
+        </div>
+        <div class="header-right">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <div id="statusBadge">
+                <span class="dot"></span>
+                <span id="statusText">Ready</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT -->
+    <div class="layout">
+        <!-- MAIN -->
+        <div class="main">
+            <!-- ONE THING -->
+            <div class="one-thing">
+                <div class="one-thing-label">🎯 Your One Thing Right Now</div>
+                <div id="oneThingTitle">Loading...</div>
+                <div id="oneThingWhy">Analyzing your tasks...</div>
+                <button id="startFocusBtn" disabled>🔒 Enter Focus Mode</button>
+            </div>
+
+            <!-- ADD TASK -->
+            <form class="add-task-bar" onsubmit="addTask(event)">
+                <input type="text" id="taskTitle" placeholder="What needs to be done?" required>
+                <input type="number" id="taskTime" placeholder="Min" min="5" max="480" value="30" title="Estimated minutes">
+                <select id="taskImportance" title="Importance">
+                    <option value="1">⭐ 1</option>
+                    <option value="2">⭐ 2</option>
+                    <option value="3" selected>⭐ 3</option>
+                    <option value="4">⭐ 4</option>
+                    <option value="5">⭐ 5</option>
+                </select>
+                <select id="taskUrgency" title="Urgency">
+                    <option value="1">🔥 1</option>
+                    <option value="2">🔥 2</option>
+                    <option value="3" selected>🔥 3</option>
+                    <option value="4">🔥 4</option>
+                    <option value="5">🔥 5</option>
+                </select>
+                <input type="datetime-local" id="taskDeadline" title="Deadline (optional)">
+                <button type="submit">+ Add Task</button>
+            </form>
+
+            <!-- TABS + TASK LIST -->
+            <div class="tabs">
+                <button class="tab active" onclick="filterTasks('all')">All</button>
+                <button class="tab" onclick="filterTasks('critical')">🔴 Critical</button>
+                <button class="tab" onclick="filterTasks('leverage')">🟢 Leverage</button>
+                <button class="tab" onclick="filterTasks('today')">📅 Today</button>
+            </div>
+
+            <div class="task-list-header">
+                <h2>Strategic Queue</h2>
+                <span id="taskCount">0 tasks</span>
+            </div>
+
+            <div id="taskList">
+                <!-- Rendered by app.js -->
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h3>📊 Today's Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statCompleted">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statBlocked">0</div>
+                    <div class="stat-label">Distractions Cut</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statFocusTime">0h</div>
+                    <div class="stat-label">Focus Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statStreak">7</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+
+            <h3>🔬 Triage Summary</h3>
+            <div class="triage-summary">
+                <div class="triage-row t1">
+                    <span class="label">T1 Critical</span>
+                    <span class="count" id="t1Count">0</span>
+                </div>
+                <div class="triage-row t2">
+                    <span class="label">T2 Leverage</span>
+                    <span class="count" id="t2Count">0</span>
+                </div>
+                <div class="triage-row t3">
+                    <span class="label">T3 Interrupt</span>
+                    <span class="count" id="t3Count">0</span>
+                </div>
+                <div class="triage-row t4">
+                    <span class="label">T4 Distract</span>
+                    <span class="count" id="t4Count">0</span>
+                </div>
+                <div class="triage-row t5">
+                    <span class="label">T5 Phantom</span>
+                    <span class="count" id="t5Count">0</span>
+                </div>
+            </div>
+
+            <h3>⚡ Energy Level</h3>
+            <div class="energy-section">
+                <div class="energy-bar">
+                    <div class="energy-block active" onclick="setEnergy(1)"></div>
+                    <div class="energy-block active" onclick="setEnergy(2)"></div>
+                    <div class="energy-block active" onclick="setEnergy(3)"></div>
+                    <div class="energy-block active" onclick="setEnergy(4)"></div>
+                    <div class="energy-block" onclick="setEnergy(5)"></div>
+                </div>
+                <p style="font-size:0.7rem; color:var(--text-muted); margin-top:0.5rem;">Click to set your current energy</p>
+            </div>
+
+            <h3>💡 How It Works</h3>
+            <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.7;">
+                <p style="margin-bottom:0.5rem;"><strong style="color:var(--t1);">T1 Critical</strong> — Do now. Deadline or revenue at risk.</p>
+                <p style="margin-bottom:0.5rem;"><strong style="color:var(--t2);">T2 Leverage</strong> — Schedule this. Moves the needle.</p>
+                <p style="margin-bottom:0.5rem;"><strong style="color:var(--t3);">T3 Interrupt</strong> — Urgent but low value. Delegate.</p>
+                <p style="margin-bottom:0.5rem;"><strong style="color:var(--t4);">T4 Distract</strong> — Low ROI. Consider deleting.</p>
+                <p><strong style="color:var(--t5);">T5 Phantom</strong> — Too vague. Clarify or delete.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- FOCUS OVERLAY -->
+    <div id="focusOverlay">
+        <div class="focus-content">
+            <div class="focus-label">🔒 Focus Mode Active</div>
+            <div id="focusTaskTitle">Task Title</div>
+            <div id="focusTaskWhy">Why this matters...</div>
+            <div id="focusTimer">25:00</div>
+            <div class="focus-progress">
+                <div id="focusProgressFill"></div>
+            </div>
+            <div class="focus-actions">
+                <button class="focus-btn-complete" onclick="completeFocusedTask()">✓ Complete</button>
+                <button class="focus-btn-exit" onclick="exitFocusMode()">Exit Focus</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function setEnergy(level) {
+            if (dashboard) {
+                dashboard.userContext.energyLevel = level;
+                document.querySelectorAll('.energy-block').forEach((block, i) => {
+                    block.classList.toggle('active', i < level);
+                });
+                dashboard.triageEngine.triageTasks(dashboard.tasks, dashboard.userContext);
+                dashboard.renderTasks();
+                dashboard.updateOneThing();
+            }
+        }
+    </script>
+</body>
+</html>

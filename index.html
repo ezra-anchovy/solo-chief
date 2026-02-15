@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Chief — AI Prioritization for Founders</title>
+    <meta name="description" content="Stop managing tasks. Start managing outcomes. AI-powered prioritization engine that helps solopreneurs reclaim 10+ hours a week by ruthlessly cutting low-value work.">
+    <meta property="og:title" content="Solo Chief — AI Prioritization for Founders">
+    <meta property="og:description" content="The AI Chief of Staff that tells you what NOT to do. Strategic triage for overwhelmed founders.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ezra-anchovy.github.io/solo-chief/">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark-gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .demo-preview {
+            background: #0f1117;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .demo-task {
+            background: #1a1d27;
+            border: 1px solid #2e3140;
+            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .demo-task.t1 { border-left: 3px solid #ef4444; }
+        .demo-task.t2 { border-left: 3px solid #22c55e; }
+        .demo-task.t3 { border-left: 3px solid #f59e0b; }
+        .demo-task.t4 { border-left: 3px solid #6b7280; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 glass border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">💼</span>
+                    <span class="font-bold text-xl tracking-tight">Solo Chief</span>
+                </div>
+                <div class="hidden md:flex gap-8 font-medium text-slate-600">
+                    <a href="#problem" class="hover:text-blue-600 transition">Problem</a>
+                    <a href="#features" class="hover:text-blue-600 transition">Features</a>
+                    <a href="#how-it-works" class="hover:text-blue-600 transition">Methodology</a>
+                    <a href="#demo" class="hover:text-blue-600 transition">Demo</a>
+                </div>
+                <a href="dashboard.html" class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                    Try It Free →
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-blue-600 uppercase bg-blue-50 rounded-full">
+                For Founders Who Do Everything
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                Stop managing tasks.<br/>
+                <span class="gradient-text">Start managing outcomes.</span>
+            </h1>
+            <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Solo Chief is the AI prioritization engine that helps founders reclaim 10+ hours a week by ruthlessly cutting low-value work. It doesn't just organize your list — it tells you what to <strong>delete</strong>.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="dashboard.html" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition shadow-xl inline-flex items-center justify-center gap-2">
+                    🚀 Launch Dashboard
+                </a>
+                <a href="#demo" class="bg-white border-2 border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:border-blue-500 hover:text-blue-600 transition inline-flex items-center justify-center">
+                    See How It Works
+                </a>
+            </div>
+            <div class="mt-12 text-sm text-slate-500 flex items-center justify-center gap-4">
+                <span class="flex items-center gap-1">✅ 100% Free</span>
+                <span class="flex items-center gap-1">✅ No signup</span>
+                <span class="flex items-center gap-1">✅ Runs in your browser</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold mb-4">The Solopreneur's Curse</h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">You know what to do. You just can't decide what to do <em>first</em>.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">📋</div>
+                    <h3 class="font-bold text-lg mb-2">Todo apps accumulate</h3>
+                    <p class="text-slate-600">Every app out there helps you <em>add</em> tasks. None of them help you <em>delete</em> the ones draining your time.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">🔥</div>
+                    <h3 class="font-bold text-lg mb-2">Urgency wins</h3>
+                    <p class="text-slate-600">You spend all day on urgent-but-unimportant fires. The needle-moving work keeps getting "rolled to tomorrow."</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">😩</div>
+                    <h3 class="font-bold text-lg mb-2">Decision fatigue</h3>
+                    <p class="text-slate-600">By the time you decide what to work on, you've burned 30% of your energy on the decision itself.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold mb-4">What Solo Chief Does Differently</h2>
+                <p class="text-slate-400 text-lg">Not a todo app. A strategic triage engine.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div>
+                    <div class="text-3xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-3">5-Tier AI Triage</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Every task is scored across 5 dimensions — goal alignment, impact, time efficiency, deadline proximity, and energy fit — then classified into Critical, Leverage, Interrupt, Distract, or Phantom.
+                    </p>
+                </div>
+                <div>
+                    <div class="text-3xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold mb-3">One Thing Lock</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Focus Mode locks your screen to a single task with a countdown timer. No sidebar. No notifications. Just the work and a timer. The Chief protects you from your own backlog.
+                    </p>
+                </div>
+                <div>
+                    <div class="text-3xl mb-4">🗑️</div>
+                    <h3 class="text-xl font-bold mb-3">Delete-First Thinking</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Phantom tasks (too vague), chronic rollovers (you're avoiding them for a reason), and low-ROI busywork get flagged for deletion. The best productivity hack is doing less.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">The Methodology</h2>
+            <div class="space-y-12">
+                <div class="flex gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">1</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Morning Triage</h4>
+                        <p class="text-slate-600">Quick-add your tasks. The Chief auto-scores importance, urgency, and ROI based on your goals, placing each into the correct strategic tier.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">2</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">The One Thing</h4>
+                        <p class="text-slate-600">The Chief picks your single highest-ROI task. Not a list. Not "top 3." One thing. Enter Focus Mode and execute.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">3</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">Cut the Noise</h4>
+                        <p class="text-slate-600">T4 Distractions and T5 Phantoms get surfaced for deletion. If you've rolled a task 5 times, it's dead weight. The Chief says so.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Preview -->
+    <section id="demo" class="py-20 bg-slate-100">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-4">See It In Action</h2>
+                <p class="text-slate-600 text-lg">Here's what your dashboard looks like after morning triage.</p>
+            </div>
+            <div class="demo-preview shadow-2xl">
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem;">
+                    <span style="font-size:1.25rem;">🎯</span>
+                    <span style="color:#3b82f6; font-size:0.7rem; text-transform:uppercase; font-weight:700; letter-spacing:0.1em;">Your One Thing Right Now</span>
+                </div>
+                <div style="color:#e4e4e7; font-size:1.1rem; font-weight:700; margin-bottom:0.25rem;">Finalize Q1 pricing proposal for Enterprise client</div>
+                <div style="color:#71717a; font-size:0.8rem; margin-bottom:1.25rem;">CRITICAL: Has 4/5 urgency and directly impacts your goals. Clear everything else.</div>
+                
+                <div class="demo-task t1">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#e4e4e7; font-weight:600; font-size:0.85rem;">Finalize Q1 pricing proposal</span>
+                        <span style="background:rgba(239,68,68,0.1); color:#ef4444; font-size:0.6rem; font-weight:700; padding:0.15rem 0.4rem; border-radius:3px;">CRITICAL</span>
+                    </div>
+                    <div style="color:#71717a; font-size:0.7rem; margin-top:0.35rem;">⏱ 45m · ⭐ 5/5 · 🔥 4/5 · <span style="background:rgba(59,130,246,0.15); color:#3b82f6; padding:0.1rem 0.3rem; border-radius:3px;">ROI: 90</span></div>
+                </div>
+                <div class="demo-task t2">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#e4e4e7; font-weight:600; font-size:0.85rem;">Ship One Thing Lock feature prototype</span>
+                        <span style="background:rgba(34,197,94,0.1); color:#22c55e; font-size:0.6rem; font-weight:700; padding:0.15rem 0.4rem; border-radius:3px;">LEVERAGE</span>
+                    </div>
+                    <div style="color:#71717a; font-size:0.7rem; margin-top:0.35rem;">⏱ 90m · ⭐ 5/5 · 🔥 3/5 · <span style="background:rgba(59,130,246,0.15); color:#3b82f6; padding:0.1rem 0.3rem; border-radius:3px;">ROI: 72</span></div>
+                </div>
+                <div class="demo-task t3">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#e4e4e7; font-weight:600; font-size:0.85rem;">Respond to vendor email</span>
+                        <span style="background:rgba(245,158,11,0.1); color:#f59e0b; font-size:0.6rem; font-weight:700; padding:0.15rem 0.4rem; border-radius:3px;">INTERRUPT</span>
+                    </div>
+                    <div style="color:#71717a; font-size:0.7rem; margin-top:0.35rem;">⏱ 5m · ⭐ 2/5 · 🔥 4/5 · <span style="background:rgba(59,130,246,0.15); color:#3b82f6; padding:0.1rem 0.3rem; border-radius:3px;">ROI: 38</span></div>
+                </div>
+                <div class="demo-task t4">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#71717a; font-weight:600; font-size:0.85rem; text-decoration:line-through;">Check Twitter mentions</span>
+                        <span style="background:rgba(107,114,128,0.1); color:#6b7280; font-size:0.6rem; font-weight:700; padding:0.15rem 0.4rem; border-radius:3px;">DISTRACT</span>
+                    </div>
+                    <div style="color:#71717a; font-size:0.7rem; margin-top:0.35rem;">⏱ 10m · ⭐ 1/5 · 🔥 2/5 · <span style="color:#ef4444; font-size:0.65rem;">← Delete this</span></div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <a href="dashboard.html" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-xl inline-flex items-center gap-2">
+                    🚀 Try the Full Dashboard
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">FAQ</h2>
+            <div class="space-y-8">
+                <div>
+                    <h4 class="font-bold mb-2">Is my data sent to a server?</h4>
+                    <p class="text-slate-600">No. Solo Chief runs 100% in your browser. Your tasks are stored in localStorage. No accounts, no tracking, no cloud sync.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-2">How is this different from Todoist / Notion?</h4>
+                    <p class="text-slate-600">Those are accumulators — they help you store infinite tasks. Solo Chief is a triage engine — it helps you decide what <em>not</em> to do. It scores every task on ROI and actively recommends deletions.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-2">What's the 5-tier system?</h4>
+                    <p class="text-slate-600">It goes beyond the Eisenhower Matrix. T1 Critical (do now), T2 Leverage (high ROI, schedule it), T3 Interrupt (urgent but low value), T4 Distract (delete it), T5 Phantom (too vague to act on).</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-2">Is it free?</h4>
+                    <p class="text-slate-600">Yes, completely free and open source. Built by <a href="https://anchovylabs.ai" class="text-blue-600 hover:underline">Anchovy Labs</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-slate-900 text-white text-center">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-4xl font-extrabold mb-4">Your time is the product.</h2>
+            <p class="text-slate-400 text-lg mb-8">Stop accumulating. Start triaging.</p>
+            <a href="dashboard.html" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-xl inline-flex items-center gap-2">
+                Launch Solo Chief →
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-slate-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
+            <p>© 2026 <a href="https://anchovylabs.ai" class="hover:text-blue-600">Anchovy Labs</a>. Built for overwhelmed founders.</p>
+            <div class="flex gap-6">
+                <a href="https://github.com/ezra-anchovy/solo-chief" class="hover:text-blue-600">GitHub</a>
+                <a href="https://twitter.com/EzraAnchovy" class="hover:text-blue-600">Twitter</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
